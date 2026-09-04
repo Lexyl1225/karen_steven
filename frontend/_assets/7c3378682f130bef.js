@@ -1,0 +1,14 @@
+(globalThis["webpackChunk_canva_web"] = globalThis["webpackChunk_canva_web"] || []).push([[87236],{
+
+/***/ 905924:
+function(_,__,__webpack_require__){__webpack_require__.n_x=__webpack_require__.n;const __web_req__=__webpack_require__;__web_req__(765703);globalThis._5f74ec40302898c5a55451c9fbd04240=globalThis._5f74ec40302898c5a55451c9fbd04240||{};(function(__c){var Nzd,Ozd,Pzd,Qzd,Rzd,Szd;Nzd=function(a){return Uint8Array.from(a.split("").map(b=>b.charCodeAt(0)))};Ozd=function(a){var b=a.size;return new Uint8Array([b>>24&255,b>>16&255,b>>8&255,b&255,...Nzd(a.type)])};
+__c.fZ=class{static create(a){a=a.flatMap(d=>d.parts());var b=a.reduce((d,e)=>d+e.byteLength,0);b=new Uint8Array(b);var c=0;for(let d of a)b.set(d,c),c+=d.byteLength;return b}static parse(a){for(var b=[],c=0;c<a.byteLength;)try{let g=void 0;var d=new DataView(a.buffer,a.byteOffset+c);if(d.byteLength<8)throw new RangeError("MP4 Box is too short");let h=0,k=d.getUint32(h)||d.byteLength;h+=4;if(k===1)throw new TypeError("Large box is not supported");if(d.byteLength<k)throw new RangeError("MP4 Box is too short");
+var e=d,f=h;let l=String.fromCharCode(e.getUint8(f),e.getUint8(f+1),e.getUint8(f+2),e.getUint8(f+3));h+=4;if(Pzd.includes(l))g=new Qzd(l,new Uint8Array(d.buffer,d.byteOffset+h,k-h));else if(Rzd.includes(l)){let p=d.getUint8(h);h+=1;let q=d.getUint16(h)<<8|d.getUint8(h+2);h+=3;g=new Szd(l,p,q,new Uint8Array(d.buffer,d.byteOffset+h,k-h))}else g=new __c.Tzd(l,new Uint8Array(d.buffer,d.byteOffset+h,k-h));let {box:m,size:n}={size:k,box:g};b.push(m);c+=n}catch(g){if(g instanceof RangeError)return{dB:b,
+offset:c,complete:!1};throw g;}return{dB:b,offset:c,complete:!0}}static find(a,b){return a.find(c=>c.type===b)}};Pzd="dinf edts mdia minf moof moov mvex stbl traf trak".split(" ");
+Qzd=class{get size(){return 8+this.children.reduce((a,b)=>a+b.size,0)}find(a){return __c.fZ.find(this.children,a)}get(a){var b=__c.fZ.find(this.children,a);__c.u(b!=null,`${a} box not found`);return b}parts(){var a=this.children.flatMap(b=>b.parts());return[Ozd(this),...a]}constructor(a,b){this.type=a;a=__c.fZ.parse(b);__c.u(a.complete);this.children=a.dB}};Rzd="co64 ctts elst esds hdlr mdhd mfhd mvhd sidx stco stsc stsd stss stsz stts tfhd tkhd trex trun vmhd".split(" ");
+Szd=class{get size(){return 12+this.data.byteLength}parts(){return[Ozd(this),new Uint8Array([this.version,this.flags>>16,this.flags>>8&255,this.flags&255]),this.data]}view(){return new DataView(this.data.buffer,this.data.byteOffset,this.data.byteLength)}constructor(a,b,c,d){this.type=a;this.version=b;this.flags=c;this.data=d}};
+__c.Tzd=class{get size(){return 8+this.data.byteLength}parts(){return[Ozd(this),this.data]}view(){return new DataView(this.data.buffer,this.data.byteOffset,this.data.byteLength)}constructor(a,b){this.type=a;this.data=b}};
+}).call(globalThis,globalThis._5f74ec40302898c5a55451c9fbd04240);}
+
+}])
+//# sourceMappingURL=sourcemaps/7c3378682f130bef.js.map

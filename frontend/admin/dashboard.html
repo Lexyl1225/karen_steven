@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard &bull; Karen &amp; Steven Wedding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/dashboard.css" />
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-badge">
+        <div class="brand-icon">💍</div>
+        <div class="brand-info">
+          <h2>Karen &amp; Steven</h2>
+          <span>Admin Portal</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-menu">
+      <div class="menu-category">General</div>
+      <button class="nav-item active" data-target="overview">
+        <span class="nav-icon">📊</span>
+        <span>Overview</span>
+      </button>
+      <button class="nav-item" data-target="media">
+        <span class="nav-icon">📁</span>
+        <span>Media Library</span>
+        <span class="nav-badge" id="media-badge-count">0</span>
+      </button>
+
+      <div class="menu-category">Website Sections</div>
+      <button class="nav-item" data-target="home">
+        <span class="nav-icon">🏠</span>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" data-target="save_the_date">
+        <span class="nav-icon">📅</span>
+        <span>Save the Date</span>
+      </button>
+      <button class="nav-item" data-target="location">
+        <span class="nav-icon">📍</span>
+        <span>Location</span>
+      </button>
+      <button class="nav-item" data-target="timeline">
+        <span class="nav-icon">⏳</span>
+        <span>Timeline</span>
+      </button>
+      <button class="nav-item" data-target="dress_code">
+        <span class="nav-icon">👗</span>
+        <span>Dress Code</span>
+      </button>
+      <button class="nav-item" data-target="entourage">
+        <span class="nav-icon">👥</span>
+        <span>Entourage</span>
+      </button>
+      <button class="nav-item" data-target="reminders">
+        <span class="nav-icon">📝</span>
+        <span>Reminders</span>
+      </button>
+      <button class="nav-item" data-target="playlist">
+        <span class="nav-icon">🎵</span>
+        <span>Playlist</span>
+      </button>
+      <button class="nav-item" data-target="rsvp">
+        <span class="nav-icon">💌</span>
+        <span>RSVP &amp; Guests</span>
+        <span class="nav-badge" id="rsvp-badge-count">0</span>
+      </button>
+      <button class="nav-item" data-target="prenup">
+        <span class="nav-icon">📷</span>
+        <span>Prenup Gallery</span>
+      </button>
+
+      <div class="menu-category">Configuration</div>
+      <button class="nav-item" data-target="page_options">
+        <span class="nav-icon">⚙️</span>
+        <span>Page Options</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="admin-profile">
+        <div class="admin-avatar">👑</div>
+        <div>
+          <div class="admin-name" id="admin-display-name">admin</div>
+          <div class="admin-role">Site Administrator</div>
+        </div>
+      </div>
+      <a href="/admin/logout" class="logout-btn" title="Log Out">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="main-wrapper">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-toggle" id="mobile-toggle">☰</button>
+        <h1 class="page-title" id="current-panel-title">Dashboard Overview</h1>
+      </div>
+      <div class="topbar-right">
+        <a href="/" target="_blank" class="btn btn-secondary btn-sm">
+          <span>🌐</span> View Live Website
+        </a>
+        <button class="btn btn-primary btn-sm save-all-btn" id="global-save-btn" style="display: none;">
+          <span>💾</span> Save Changes
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content-container">
+
+      <!-- PANEL: Overview -->
+      <section class="tab-panel active" id="panel-overview">
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-icon">💌</div>
+            <div>
+              <div class="stat-val" id="kpi-rsvps-total">0</div>
+              <div class="stat-label">Total RSVPs</div>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">🌸</div>
+            <div>
+              <div class="stat-val" id="kpi-rsvps-attending">0</div>
+              <div class="stat-label">Attending Guests</div>
+            </div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-icon">📁</div>
+            <div>
+              <div class="stat-val" id="kpi-media-count">0</div>
+              <div class="stat-label">Media Files</div>
+            </div>
+          </div>
+          <div class="stat-card gold">
+            <div class="stat-icon">⏳</div>
+            <div>
+              <div class="stat-val" id="kpi-days-left">--</div>
+              <div class="stat-label">Days Until Big Day</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Quick Section Shortcuts</h3>
+              <p>Directly jump to customize any wedding section</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+              <button class="btn btn-secondary" onclick="navigateToTab('home')">💍 Home &amp; Hero</button>
+              <button class="btn btn-secondary" onclick="navigateToTab('save_the_date')">📅 Save the Date</button>
+              <button class="btn btn-secondary" onclick="navigateToTab('location')">📍 Venue Locations</button>
+              <button class="btn btn-secondary" onclick="navigateToTab('timeline')">⏳ Timeline</button>
+              <button class="btn btn-secondary" onclick="navigateToTab('dress_code')">👗 Dress Code</button>
+              <button class="btn btn-secondary" onclick="navigateToTab('entourage')">👥 Entourage</button>
+              <button class="btn btn-secondary" onclick="navigateToTab('playlist')">🎵 Playlist</button>
+              <button class="btn btn-secondary" onclick="navigateToTab('rsvp')">💌 Manage RSVPs</button>
+              <button class="btn btn-secondary" onclick="navigateToTab('prenup')">📷 Prenup Gallery</button>
+              <button class="btn btn-primary" onclick="navigateToTab('media')">⬆️ Upload Media</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Recent Guest RSVPs</h3>
+              <p>Latest responses received from guests</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="navigateToTab('rsvp')">View All &rarr;</button>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="data-table" id="overview-rsvp-table">
+              <thead>
+                <tr>
+                  <th>Guest Name</th>
+                  <th>Status</th>
+                  <th>Message / Notes</th>
+                </tr>
+              </thead>
+              <tbody id="overview-rsvp-tbody">
+                <tr><td colspan="3" style="text-align: center; color: #94a3b8;">Loading RSVPs...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Home -->
+      <section class="tab-panel" id="panel-home">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Home &amp; Hero Section</h3>
+              <p>Edit names, headline, dates, hero video, and background</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="home">💾 Save Home</button>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="home_bride_name">Bride's Name</label>
+                <input type="text" id="home_bride_name" class="form-control" placeholder="Karen" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="home_groom_name">Groom's Name</label>
+                <input type="text" id="home_groom_name" class="form-control" placeholder="Steven" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="home_title">Headline / Title</label>
+                <input type="text" id="home_title" class="form-control" placeholder="THE WEDDING" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="home_date_text">Date Banner Text</label>
+                <input type="text" id="home_date_text" class="form-control" placeholder="September 18, 2026" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="home_rsvp_btn_text">RSVP Button Text</label>
+                <input type="text" id="home_rsvp_btn_text" class="form-control" placeholder="RSVP HERE" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="home_subtitle">Subtitle</label>
+                <input type="text" id="home_subtitle" class="form-control" placeholder="You are Invited!" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="home_video_url">Video Short / YouTube URL</label>
+              <input type="text" id="home_video_url" class="form-control" placeholder="https://m.youtube.com/shorts/..." />
+              <div class="form-help">Embedded YouTube short or direct MP4 video link</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Hero Background Image</label>
+              <div class="media-input-group">
+                <input type="text" id="home_background_image" class="form-control" placeholder="_assets/images/..." />
+                <button type="button" class="btn btn-secondary choose-media-btn" data-target-input="home_background_image">📁 Choose</button>
+                <button type="button" class="btn btn-primary quick-upload-btn" data-target-input="home_background_image">⬆️ Upload</button>
+              </div>
+              <div class="media-preview-box" id="home_background_image_preview"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Changes will update the main website hero screen.</span>
+            <button class="btn btn-primary save-section-btn" data-section="home">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Save the Date -->
+      <section class="tab-panel" id="panel-save_the_date">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Save the Date Section</h3>
+              <p>Configure calendar display, wedding date, and countdown timer</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="save_the_date">💾 Save Section</button>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="std_title">Section Title</label>
+                <input type="text" id="std_title" class="form-control" placeholder="Our Big Day Awaits" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="std_subtitle">Subtitle</label>
+                <input type="text" id="std_subtitle" class="form-control" placeholder="Save the Date" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="std_month_year">Month &amp; Year</label>
+                <input type="text" id="std_month_year" class="form-control" placeholder="September 2026" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="std_wedding_date">Wedding Date (YYYY-MM-DD)</label>
+                <input type="date" id="std_wedding_date" class="form-control" value="2026-09-18" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="std_highlight_day">Calendar Highlight Day</label>
+                <input type="text" id="std_highlight_day" class="form-control" placeholder="18" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="std_countdown_embed">Countdown Timer Embed URL</label>
+              <input type="text" id="std_countdown_embed" class="form-control" placeholder="https://dfzpu93ycp7qo.betterimages.ai/..." />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Section Photo</label>
+              <div class="media-input-group">
+                <input type="text" id="std_image" class="form-control" placeholder="_assets/media/..." />
+                <button type="button" class="btn btn-secondary choose-media-btn" data-target-input="std_image">📁 Choose</button>
+                <button type="button" class="btn btn-primary quick-upload-btn" data-target-input="std_image">⬆️ Upload</button>
+              </div>
+              <div class="media-preview-box" id="std_image_preview"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Controls the calendar and countdown section.</span>
+            <button class="btn btn-primary save-section-btn" data-section="save_the_date">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Location -->
+      <section class="tab-panel" id="panel-location">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Location &amp; Venues</h3>
+              <p>Ceremony and reception church, hall, and Google Maps links</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="location">💾 Save Location</button>
+          </div>
+          <div class="card-body">
+            <h4 style="font-size: 15px; margin-bottom: 14px; color: var(--primary);">⛪ Ceremony Venue</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="loc_ceremony_title">Title</label>
+                <input type="text" id="loc_ceremony_title" class="form-control" placeholder="Wedding Ceremony" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loc_ceremony_church">Church / Venue</label>
+                <input type="text" id="loc_ceremony_church" class="form-control" placeholder="Iglesia Ni Cristo" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loc_ceremony_sub">Locality / Branch</label>
+                <input type="text" id="loc_ceremony_sub" class="form-control" placeholder="Lokal ng Rosario" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loc_ceremony_city">City / Province</label>
+                <input type="text" id="loc_ceremony_city" class="form-control" placeholder="Santiago City" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="loc_ceremony_map_url">Ceremony Google Maps Link</label>
+              <input type="text" id="loc_ceremony_map_url" class="form-control" placeholder="https://maps.app.goo.gl/..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ceremony Venue Photo</label>
+              <div class="media-input-group">
+                <input type="text" id="loc_ceremony_image" class="form-control" />
+                <button type="button" class="btn btn-secondary choose-media-btn" data-target-input="loc_ceremony_image">📁 Choose</button>
+                <button type="button" class="btn btn-primary quick-upload-btn" data-target-input="loc_ceremony_image">⬆️ Upload</button>
+              </div>
+              <div class="media-preview-box" id="loc_ceremony_image_preview"></div>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;" />
+
+            <h4 style="font-size: 15px; margin-bottom: 14px; color: var(--accent-lavender);">🥂 Reception Venue</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="loc_reception_title">Title</label>
+                <input type="text" id="loc_reception_title" class="form-control" placeholder="Wedding Reception" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loc_reception_venue">Venue Name</label>
+                <input type="text" id="loc_reception_venue" class="form-control" placeholder="Alleria Events Place" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loc_reception_city">City</label>
+                <input type="text" id="loc_reception_city" class="form-control" placeholder="Santiago City" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="loc_reception_map_url">Reception Google Maps Link</label>
+              <input type="text" id="loc_reception_map_url" class="form-control" placeholder="https://maps.app.goo.gl/..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Reception Venue Photo</label>
+              <div class="media-input-group">
+                <input type="text" id="loc_reception_image" class="form-control" />
+                <button type="button" class="btn btn-secondary choose-media-btn" data-target-input="loc_reception_image">📁 Choose</button>
+                <button type="button" class="btn btn-primary quick-upload-btn" data-target-input="loc_reception_image">⬆️ Upload</button>
+              </div>
+              <div class="media-preview-box" id="loc_reception_image_preview"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Google Maps links allow guests to open directions directly.</span>
+            <button class="btn btn-primary save-section-btn" data-section="location">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Timeline -->
+      <section class="tab-panel" id="panel-timeline">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Timeline &amp; Event Milestones</h3>
+              <p>Order of events on the wedding day</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="timeline">💾 Save Timeline</button>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="tl_title">Section Title</label>
+                <input type="text" id="tl_title" class="form-control" placeholder="Wedding Timeline" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="tl_subtitle">Subtitle</label>
+                <input type="text" id="tl_subtitle" class="form-control" placeholder="Program for our special day" />
+              </div>
+            </div>
+
+            <label class="form-label" style="margin-top: 10px;">Schedule Milestones</label>
+            <div id="timeline-list" class="dynamic-list"></div>
+
+            <button type="button" class="btn btn-secondary btn-sm" id="add-timeline-item-btn">
+              <span>➕</span> Add New Milestone
+            </button>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Events will be arranged chronologically.</span>
+            <button class="btn btn-primary save-section-btn" data-section="timeline">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Dress Code -->
+      <section class="tab-panel" id="panel-dress_code">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Dress Code &amp; Palette</h3>
+              <p>Guest attire guidelines and prescribed wedding theme colors</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="dress_code">💾 Save Dress Code</button>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="dc_title">Section Title</label>
+                <input type="text" id="dc_title" class="form-control" placeholder="Dress Code" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="dc_attire_rule">Attire Requirement</label>
+                <input type="text" id="dc_attire_rule" class="form-control" placeholder="Formal Attire is strictly requested." />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="dc_ladies">Ladies Attire</label>
+                <input type="text" id="dc_ladies" class="form-control" placeholder="Maxi Dress | Long Gown" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="dc_gentlemen">Gentlemen Attire</label>
+                <input type="text" id="dc_gentlemen" class="form-control" placeholder="Formal Polo or Long Sleeves | Black Slacks" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="dc_notes">Color Palette &amp; Styling Notes</label>
+              <textarea id="dc_notes" class="form-control" placeholder="Please wear shades of DUSTY BLUE and LAVENDER to compliment the theme."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Theme Color Swatches (Comma-separated hex codes)</label>
+              <input type="text" id="dc_colors" class="form-control" placeholder="#4a6984, #742374, #9bb0c1, #cbb3cc, #c5a059" />
+              <div id="dc_color_preview" style="display: flex; gap: 8px; margin-top: 8px;"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Visual Guide Image</label>
+              <div class="media-input-group">
+                <input type="text" id="dc_guide_image" class="form-control" />
+                <button type="button" class="btn btn-secondary choose-media-btn" data-target-input="dc_guide_image">📁 Choose</button>
+                <button type="button" class="btn btn-primary quick-upload-btn" data-target-input="dc_guide_image">⬆️ Upload</button>
+              </div>
+              <div class="media-preview-box" id="dc_guide_image_preview"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Helps your guests arrive in stunning matching attire.</span>
+            <button class="btn btn-primary save-section-btn" data-section="dress_code">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Entourage -->
+      <section class="tab-panel" id="panel-entourage">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Wedding Entourage</h3>
+              <p>Best man, maid of honor, groomsmen, and bridesmaids</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="entourage">💾 Save Entourage</button>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="ent_title">Section Title</label>
+                <input type="text" id="ent_title" class="form-control" placeholder="The Entourage" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ent_subtitle">Subtitle</label>
+                <input type="text" id="ent_subtitle" class="form-control" placeholder="Standing beside us on our special day" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ent_best_man">Best Man</label>
+                <input type="text" id="ent_best_man" class="form-control" placeholder="Ricky P. Fernandez" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ent_maid_of_honor">Maid of Honor</label>
+                <input type="text" id="ent_maid_of_honor" class="form-control" placeholder="Marissa P. Fernandez" />
+              </div>
+            </div>
+
+            <div class="form-grid" style="margin-top: 10px;">
+              <div>
+                <label class="form-label">Groomsmen</label>
+                <div id="groomsmen-list" class="dynamic-list"></div>
+                <button type="button" class="btn btn-secondary btn-sm" id="add-groomsman-btn">➕ Add Groomsman</button>
+              </div>
+              <div>
+                <label class="form-label">Bridesmaids</label>
+                <div id="bridesmaids-list" class="dynamic-list"></div>
+                <button type="button" class="btn btn-secondary btn-sm" id="add-bridesmaid-btn">➕ Add Bridesmaid</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Honoring your closest bridal party members.</span>
+            <button class="btn btn-primary save-section-btn" data-section="entourage">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Reminders -->
+      <section class="tab-panel" id="panel-reminders">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Reminders &amp; Guidelines</h3>
+              <p>Key instructions, intimate policy, and day-of etiquette</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="reminders">💾 Save Reminders</button>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label" for="rem_title">Section Title</label>
+              <input type="text" id="rem_title" class="form-control" placeholder="Reminders & Guidelines" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="rem_intimate_note">Intimate Guest List Notice</label>
+              <textarea id="rem_intimate_note" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="rem_dress_code_note">Dress Code Notice</label>
+              <textarea id="rem_dress_code_note" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="rem_unplugged_ceremony">Unplugged Ceremony / Phone Notice</label>
+              <input type="text" id="rem_unplugged_ceremony" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="rem_punctuality">Punctuality Guideline</label>
+              <input type="text" id="rem_punctuality" class="form-control" />
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Ensure a smooth and solemn ceremony.</span>
+            <button class="btn btn-primary save-section-btn" data-section="reminders">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Playlist -->
+      <section class="tab-panel" id="panel-playlist">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Wedding Playlist</h3>
+              <p>Spotify playlist integration and audio player</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="playlist">💾 Save Playlist</button>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="pl_title">Title</label>
+                <input type="text" id="pl_title" class="form-control" placeholder="Our Wedding Playlist" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pl_subtitle">Subtitle</label>
+                <input type="text" id="pl_subtitle" class="form-control" placeholder="Wedding playlist (Click to play)" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pl_spotify_url">Spotify Playlist URL</label>
+              <input type="text" id="pl_spotify_url" class="form-control" placeholder="https://open.spotify.com/playlist/..." />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pl_notes">Playlist Notes / Message</label>
+              <textarea id="pl_notes" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Player Preview</label>
+              <div id="spotify-preview-container" style="border-radius: 12px; overflow: hidden; background: #121212; min-height: 152px;"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Guests can listen to your favorite love songs directly.</span>
+            <button class="btn btn-primary save-section-btn" data-section="playlist">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: RSVP & Guests -->
+      <section class="tab-panel" id="panel-rsvp">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>RSVP Page Options</h3>
+              <p>Deadlines, messaging, and Google Forms fallback</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="rsvp">💾 Save RSVP Settings</button>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="rsvp_title">Title</label>
+                <input type="text" id="rsvp_title" class="form-control" placeholder="RSVP" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="rsvp_deadline">RSVP Deadline</label>
+                <input type="text" id="rsvp_deadline" class="form-control" placeholder="September 06, 2026" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="rsvp_description">RSVP Message</label>
+              <textarea id="rsvp_description" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="rsvp_google_form_url">Google Form URL (Fallback / Alternative)</label>
+              <input type="text" id="rsvp_google_form_url" class="form-control" placeholder="https://forms.gle/..." />
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13.5px;">
+                  <input type="checkbox" id="rsvp_enable_direct_rsvp" checked style="accent-color: var(--primary); width: 18px; height: 18px;" />
+                  <span><strong>Enable Direct Database RSVP</strong> (saves to local database)</span>
+                </label>
+              </div>
+              <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13.5px;">
+                  <input type="checkbox" id="rsvp_enable_guestbook" checked style="accent-color: var(--primary); width: 18px; height: 18px;" />
+                  <span><strong>Enable Public Guestbook</strong> (guests see each other's wishes)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guest List Management -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Guest List &amp; Confirmed Responses</h3>
+              <p>Live responses recorded in the database</p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-secondary btn-sm" id="refresh-rsvps-btn">🔄 Refresh</button>
+              <button class="btn btn-success btn-sm" id="export-rsvps-csv-btn">📥 Export CSV</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+              <input type="text" id="rsvp-search-input" class="form-control" placeholder="🔍 Search guest name or message..." style="max-width: 320px;" />
+              <select id="rsvp-status-filter" class="form-control" style="max-width: 180px;">
+                <option value="all">All Responses</option>
+                <option value="attending">Attending Only</option>
+                <option value="declined">Declined Only</option>
+              </select>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table" id="all-rsvps-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Guest Name</th>
+                    <th>Status</th>
+                    <th>Details &amp; Wishes</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="all-rsvps-tbody">
+                  <tr><td colspan="5" style="text-align: center;">Loading responses...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Prenup Gallery -->
+      <section class="tab-panel" id="panel-prenup">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Prenup Photos &amp; Video Gallery</h3>
+              <p>Manage the love story gallery photos and display order</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="prenup">💾 Save Gallery</button>
+          </div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="pn_title">Section Title</label>
+                <input type="text" id="pn_title" class="form-control" placeholder="Prenup Photos & Gallery" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pn_subtitle">Subtitle</label>
+                <input type="text" id="pn_subtitle" class="form-control" placeholder="Our Love Story in Frames" />
+              </div>
+            </div>
+
+            <label class="form-label" style="margin-top: 14px;">Gallery Photos</label>
+            <div id="prenup-photos-list" class="dynamic-list"></div>
+
+            <div style="display: flex; gap: 10px;">
+              <button type="button" class="btn btn-secondary btn-sm" id="add-prenup-photo-btn">
+                <span>➕</span> Add Photo Path
+              </button>
+              <button type="button" class="btn btn-primary btn-sm" id="upload-prenup-photo-btn">
+                <span>⬆️</span> Upload &amp; Add Photo
+              </button>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">High-resolution photos celebrate your memories beautifully.</span>
+            <button class="btn btn-primary save-section-btn" data-section="prenup">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Page Options -->
+      <section class="tab-panel" id="panel-page_options">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>General Page Options &amp; SEO</h3>
+              <p>Browser title, meta tags, and feature toggles</p>
+            </div>
+            <button class="btn btn-primary btn-sm save-section-btn" data-section="page_options">💾 Save Options</button>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label" for="opt_site_title">Browser Tab Title</label>
+              <input type="text" id="opt_site_title" class="form-control" placeholder="You are Invited! Karen & Steven Wedding" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="opt_meta_description">Meta Description (Social Sharing)</label>
+              <textarea id="opt_meta_description" class="form-control"></textarea>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <input type="checkbox" id="opt_show_floating_rsvp" checked style="accent-color: var(--primary); width: 18px; height: 18px;" />
+                  <span><strong>Show Floating RSVP Button</strong> (bottom right corner)</span>
+                </label>
+              </div>
+              <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                  <input type="checkbox" id="opt_show_guest_wishes" checked style="accent-color: var(--primary); width: 18px; height: 18px;" />
+                  <span><strong>Show Guest Wishes in RSVP Modal</strong></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="opt_primary_color">Primary Accent (Navy)</label>
+                <input type="color" id="opt_primary_color" class="form-control" value="#04225c" style="height: 42px; padding: 4px;" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="opt_secondary_color">Secondary Accent (Lavender)</label>
+                <input type="color" id="opt_secondary_color" class="form-control" value="#742374" style="height: 42px; padding: 4px;" />
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Global controls for the invitation website.</span>
+            <button class="btn btn-primary save-section-btn" data-section="page_options">💾 Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL: Media Library -->
+      <section class="tab-panel" id="panel-media">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>Media Library &amp; File Uploads</h3>
+              <p>Upload new images or videos to use across any section</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="refresh-media-btn">🔄 Refresh Files</button>
+          </div>
+          <div class="card-body">
+            <!-- Upload Dropzone -->
+            <div class="dropzone" id="dropzone">
+              <div class="dropzone-icon">☁️</div>
+              <div class="dropzone-text">Drag &amp; Drop images or videos here, or click to browse</div>
+              <div class="dropzone-sub">Supports JPG, PNG, WEBP, SVG, MP4, WEBM (Max 50MB)</div>
+              <input type="file" id="file-input" multiple accept="image/*,video/*" style="display: none;" />
+            </div>
+
+            <!-- Upload Progress -->
+            <div id="upload-progress" style="display: none; margin-top: 14px;">
+              <div style="height: 6px; background: #e2e8f0; border-radius: 999px; overflow: hidden;">
+                <div id="upload-progress-bar" style="height: 100%; width: 0%; background: var(--primary); transition: width 0.2s;"></div>
+              </div>
+              <div id="upload-progress-text" style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Uploading...</div>
+            </div>
+
+            <!-- Media Grid -->
+            <div style="margin-top: 24px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                <h4 style="font-size: 15px; font-weight: 700;">Uploaded Media Files (<span id="media-count-label">0</span>)</h4>
+              </div>
+              <div class="media-grid" id="media-grid-container">
+                <div style="grid-column: 1/-1; text-align: center; color: #94a3b8; padding: 30px;">Loading media library...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Media Selector Modal -->
+  <div class="modal-backdrop" id="media-picker-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h4>Select Media from Library</h4>
+        <button type="button" class="btn btn-secondary btn-sm" id="close-media-picker-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="media-grid" id="picker-media-grid" style="margin-top: 0;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancel-media-picker-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/admin/dashboard.js"></script>
+</body>
+</html>

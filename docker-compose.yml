@@ -1,0 +1,70 @@
+# ==============================================================================
+# Karen & Steven Wedding Invitation - Docker Compose with Tailscale
+# ==============================================================================
+# This setup runs the wedding website in a secure Docker container connected
+# directly to your private Tailscale network (tailnet).
+#
+# Access:
+# - Via Tailscale IP / MagicDNS: http://karen-steven-wedding:5000
+# - Via Localhost (optional):    http://localhost:5000
+# ==============================================================================
+
+services:
+  # ----------------------------------------------------------------------------
+  # Tailscale Network Sidecar
+  # ----------------------------------------------------------------------------
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: wedding-tailscale
+    hostname: karen-steven-wedding
+    environment:
+      # Obtain your Tailscale auth key from https://login.tailscale.com/admin/settings/keys
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      # Optional: set extra args such as --accept-dns=true
+      - TS_EXTRA_ARGS=${TS_EXTRA_ARGS:-}
+    volumes:
+      - tailscale-data:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    # Expose port 5000 on host as well (accessible via LAN/localhost)
+    ports:
+      - "${HOST_PORT:-5000}:5000"
+    restart: unless-stopped
+
+  # ----------------------------------------------------------------------------
+  # Wedding Website Application
+  # ----------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wedding-web
+    # Shares Tailscale container's network stack directly.
+    # The app is automatically accessible over your Tailnet at port 5000.
+    network_mode: "service:tailscale"
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-karen-steven-wedding-secret-key-2026}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Persistent SQLite database storage
+      - wedding-db:/app/instance
+      # Persistent user-uploaded media (photos, videos, music)
+      - wedding-uploads:/app/frontend/uploads
+    depends_on:
+      - tailscale
+    restart: unless-stopped
+
+# ------------------------------------------------------------------------------
+# Persistent Named Volumes
+# ------------------------------------------------------------------------------
+volumes:
+  tailscale-data:
+    name: wedding_tailscale_data
+  wedding-db:
+    name: wedding_instance_db
+  wedding-uploads:
+    name: wedding_user_uploads

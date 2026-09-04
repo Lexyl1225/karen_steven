@@ -1,0 +1,12 @@
+(globalThis["webpackChunk_canva_web"] = globalThis["webpackChunk_canva_web"] || []).push([[44057],{
+
+/***/ 189536:
+function(_,__,__webpack_require__){__webpack_require__.n_x=__webpack_require__.n;const __web_req__=__webpack_require__;__web_req__(765703);__web_req__(166656);__web_req__(339881);__web_req__(144328);__web_req__(514212);globalThis._5f74ec40302898c5a55451c9fbd04240=globalThis._5f74ec40302898c5a55451c9fbd04240||{};(function(__c){var S5=__c.S5;var W6d=function(){return{ref:void 0,set:a=>{__c.u(a==null)}}},X6d=__webpack_require__(296713),Y6d=X6d.Fragment,T5=X6d.jsx,Z6d=X6d.jsxs;var $6d=__webpack_require__(850680).PA;var a7d;a7d=(a,b={})=>__c.N0(a,{color:"#ffffff",...b});
+__c.Nfd={vk:__c.Yy()(({kz:{expr:a}})=>({...__c.VT,metadata:{type:"demo-12",name:__c.hc("vAIjvQ",[12])},oR:["responsive"],ID:__c.S6d,C:__c.Xy($6d(function({data:{C:b,local:c},ma:{page:d,Ca:e},Vd:f}){var g=a.classes.G0,h=a.classes.xwa,k=[`Document ID: ${d.container.id}`,`Language: ${d.container.language??"not set"}`,`Interactivity: ${e>10?"PERSISTENT":"NONE"}`,`Selected: ${c.selected}`,""].join("\n");d=()=>b.width/2+5;var l=a.computed(()=>b.Na.length),m=S5(b,{Na:void 0}),n=S5(b,{P:void 0}).map(r=>[r],
+([r])=>r),p=[],q=h.create({},{N:{fill:g.create({},{N:{Ka:W6d()}})},attributes:{weight:S5(b,{vd:void 0}),color:__c.R5(S5(b,{borderColor:void 0})),Mb:S5(b,{vr:void 0}).map(r=>r??p,r=>r.length?r:void 0),vc:!0}});return Z6d(Y6d,{children:[Array(l()).fill(null).map((r,t)=>T5(f.Ly,{args:{},N:{stroke:a.box(q),fill:g.create({},{N:{Ka:W6d()},attributes:{color:__c.R5(m.project(__c.N6d(t)))}})},attributes:{locked:!1,top:0,left:()=>Math.max(t*b.width/l()-.5,0),width:()=>b.width/l()+.5,height:()=>b.height,P:n}},
+t)),T5(f.Wu,{args:{},N:{text:()=>a7d(k,{color:b.Ze,...__c.O0(b.wy)})},attributes:{top:5,left:5,width:40,height:40}}),T5(f.Wu,{args:{},N:{text:()=>b.label},attributes:{top:()=>b.height-40-5,left:d,width:40,height:40}}),T5(f.Wu,{args:{},N:{text:()=>c.atb},attributes:{top:5,left:d,width:40,height:40},Ufa:!1}),T5(f.My,{dw:"footest",style:{position:"absolute",top:b.height-40-5,left:5,width:40,height:40,color:b.Ze},children:T5(f.Qh,{text:a7d("This text is rendered as a normal React component.",{color:b.Ze,
+...__c.O0(b.wy)})})})]})}))}))};
+}).call(globalThis,globalThis._5f74ec40302898c5a55451c9fbd04240);}
+
+}])
+//# sourceMappingURL=sourcemaps/b247a10bd708f849.js.map

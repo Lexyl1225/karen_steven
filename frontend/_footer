@@ -1,0 +1,427 @@
+<style>
+/* ==========================================================================
+   Karen & Steven Wedding - Luxury Redesigned Footer (Zero Canva Branding)
+   ========================================================================== */
+.wedding-site-footer {
+  width: 100%;
+  background: linear-gradient(180deg, #0d1b2a 0%, #060e18 100%);
+  color: #e2e8f0;
+  border-top: 2px solid #c5a059;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 65px 24px 35px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  text-align: center;
+}
+
+.wedding-site-footer::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.14) 0%, rgba(13, 27, 42, 0) 70%);
+  pointer-events: none;
+}
+
+.footer-inner-max {
+  max-width: 1180px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Top Crest Section */
+.footer-crest-section {
+  margin-bottom: 35px;
+}
+
+.footer-monogram-emblem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(197, 160, 89, 0.12);
+  border: 1.5px solid #c5a059;
+  margin-bottom: 14px;
+  box-shadow: 0 0 24px rgba(197, 160, 89, 0.25);
+}
+
+.footer-monogram-emblem svg {
+  width: 32px;
+  height: 32px;
+}
+
+.footer-couple-heading {
+  font-family: 'Lora', Georgia, 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.footer-love-quote {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 15px;
+  color: #cbd5e1;
+  max-width: 580px;
+  margin: 0 auto 16px auto;
+  line-height: 1.6;
+}
+
+.footer-date-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  border-radius: 9999px;
+  padding: 6px 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #e0c78b;
+  text-transform: uppercase;
+}
+
+.footer-date-pill .pill-dot {
+  color: #c5a059;
+}
+
+/* Ornamental Divider */
+.footer-ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 30px 0 45px 0;
+}
+
+.footer-ornament-divider .line {
+  flex: 1;
+  max-width: 260px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.4), transparent);
+}
+
+.footer-ornament-divider .symbol {
+  color: #c5a059;
+  font-size: 14px;
+}
+
+/* Four Columns Grid */
+.footer-content-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  text-align: left;
+  margin-bottom: 50px;
+}
+
+.footer-grid-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-col-title {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.25);
+  padding-bottom: 8px;
+}
+
+.footer-venue-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #e0c78b;
+  margin: 0 0 4px 0;
+}
+
+.footer-venue-desc {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+}
+
+.footer-venue-time {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #38bdf8;
+  margin: 0 0 12px 0;
+}
+
+.footer-maps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.footer-maps-btn:hover {
+  background: rgba(197, 160, 89, 0.2);
+  border-color: #c5a059;
+  color: #ffd700;
+  transform: translateY(-1px);
+}
+
+/* Quick Navigation Links */
+.footer-nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-nav-item a {
+  font-size: 13px;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.footer-nav-item a:hover {
+  color: #ffffff;
+  padding-left: 4px;
+}
+
+/* RSVP Box Column */
+.footer-rsvp-box {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.footer-rsvp-note {
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin: 0 0 14px 0;
+}
+
+.footer-rsvp-action-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #742374 0%, #4a154b 100%);
+  color: #ffffff;
+  border: 1px solid #ffd700;
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(116, 35, 116, 0.4);
+  transition: all 0.25s ease;
+  margin-bottom: 12px;
+}
+
+.footer-rsvp-action-btn:hover {
+  background: linear-gradient(135deg, #8e2b8e 0%, #5d195f 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(116, 35, 116, 0.6);
+}
+
+.footer-wedding-hashtag {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #e0c78b;
+  text-align: center;
+}
+
+/* Bottom Bar */
+.footer-bottom-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-copyright {
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.footer-admin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: #94a3b8;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 5px 12px;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.footer-admin-link:hover {
+  color: #ffffff;
+  background: rgba(197, 160, 89, 0.2);
+  border-color: #c5a059;
+}
+
+@media (max-width: 900px) {
+  .footer-content-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}
+
+@media (max-width: 600px) {
+  .wedding-site-footer {
+    padding: 45px 18px 25px 18px;
+  }
+  .footer-couple-heading {
+    font-size: 26px;
+  }
+  .footer-content-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: center;
+  }
+  .footer-col-title {
+    justify-content: center;
+  }
+  .footer-maps-btn {
+    align-self: center;
+  }
+  .footer-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+</style>
+
+<footer class="wedding-site-footer" id="wedding-site-footer">
+  <div class="footer-inner-max">
+    <!-- Top Crest Section -->
+    <div class="footer-crest-section">
+      <div class="footer-monogram-emblem">
+        <svg viewBox="0 0 40 40" fill="none">
+          <circle cx="15" cy="22" r="10" stroke="#c5a059" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="25" cy="22" r="10" stroke="#e0c78b" stroke-width="2.2" stroke-linecap="round"/>
+          <polygon points="20,7 23,12 17,12" fill="#c5a059"/>
+          <circle cx="20" cy="6" r="1.5" fill="#fff"/>
+        </svg>
+      </div>
+      <h2 class="footer-couple-heading">Karen &amp; Steven</h2>
+      <p class="footer-love-quote">“Two lives, two hearts, joined together in friendship, united forever in love.”</p>
+      <div class="footer-date-pill">
+        <span>FRIDAY, SEPTEMBER 18, 2026</span>
+        <span class="pill-dot">•</span>
+        <span>SANTIAGO CITY, PHILIPPINES</span>
+      </div>
+    </div>
+
+    <!-- Ornamental Divider -->
+    <div class="footer-ornament-divider">
+      <span class="line"></span>
+      <span class="symbol">❖</span>
+      <span class="line"></span>
+    </div>
+
+    <!-- 4 Column Content Grid -->
+    <div class="footer-content-grid">
+      <!-- Ceremony Column -->
+      <div class="footer-grid-col">
+        <h3 class="footer-col-title">💒 Wedding Ceremony</h3>
+        <p class="footer-venue-title">Iglesia Ni Cristo</p>
+        <p class="footer-venue-desc">Lokal ng Rosario, Santiago City</p>
+        <p class="footer-venue-time">Solemnization: 3:00 PM</p>
+        <a href="https://maps.app.goo.gl/4zqntRy8gpKKDxDu6?g_st=ac" target="_blank" rel="noopener" class="footer-maps-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Google Maps
+        </a>
+      </div>
+
+      <!-- Reception Column -->
+      <div class="footer-grid-col">
+        <h3 class="footer-col-title">🥂 Dinner Reception</h3>
+        <p class="footer-venue-title">Alleria Events Place</p>
+        <p class="footer-venue-desc">Santiago City, Isabela</p>
+        <p class="footer-venue-time">Cocktails &amp; Dinner: 6:00 PM</p>
+        <a href="https://maps.app.goo.gl/9vCq7eU3qjJj3o7M7" target="_blank" rel="noopener" class="footer-maps-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Google Maps
+        </a>
+      </div>
+
+      <!-- Quick Navigation Column -->
+      <div class="footer-grid-col">
+        <h3 class="footer-col-title">✨ Wedding Guide</h3>
+        <ul class="footer-nav-links">
+          <li class="footer-nav-item"><a class="wedding-footer-nav" data-target="home">Home &amp; Hero</a></li>
+          <li class="footer-nav-item"><a class="wedding-footer-nav" data-target="save_the_date">Save the Date</a></li>
+          <li class="footer-nav-item"><a class="wedding-footer-nav" data-target="location">Venues &amp; Map</a></li>
+          <li class="footer-nav-item"><a class="wedding-footer-nav" data-target="timeline">Timeline &amp; Schedule</a></li>
+          <li class="footer-nav-item"><a class="wedding-footer-nav" data-target="dress_code">Dress Code &amp; Palette</a></li>
+          <li class="footer-nav-item"><a class="wedding-footer-nav" data-target="entourage">Wedding Entourage</a></li>
+          <li class="footer-nav-item"><a class="wedding-footer-nav" data-target="reminders">Reminders &amp; Guidelines</a></li>
+          <li class="footer-nav-item"><a class="wedding-footer-nav" data-target="playlist">Wedding Playlist</a></li>
+          <li class="footer-nav-item"><a class="wedding-footer-nav" data-target="prenup">Prenup Gallery</a></li>
+        </ul>
+      </div>
+
+      <!-- RSVP Box Column -->
+      <div class="footer-grid-col">
+        <div class="footer-rsvp-box">
+          <h3 class="footer-col-title" style="margin-top:0; border-bottom:none; padding-bottom:0;">💌 RSVP &amp; Wishes</h3>
+          <p class="footer-rsvp-note">We would be honored by your presence. Please confirm attendance by September 06, 2026.</p>
+          <button type="button" class="footer-rsvp-action-btn" id="footer-rsvp-trigger-btn">
+            ✨ Submit Your RSVP
+          </button>
+          <div class="footer-wedding-hashtag">
+            #KarenAndStevenWedding
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom-bar">
+      <div class="footer-copyright">
+        © 2026 Karen &amp; Steven. Created with love for our wedding celebration.
+      </div>
+      <div class="footer-admin-shortcut">
+        <a href="/admin" class="footer-admin-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Admin Portal
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
