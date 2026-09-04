@@ -90,20 +90,25 @@
     </nav>
 
     <div class="sidebar-footer">
-      <div class="admin-profile">
+      <div class="admin-profile" id="sidebar-admin-profile" style="cursor: pointer;" title="Admin Profile & Settings">
         <div class="admin-avatar">👑</div>
         <div>
           <div class="admin-name" id="admin-display-name">admin</div>
           <div class="admin-role">Site Administrator</div>
         </div>
       </div>
-      <a href="/admin/logout" class="logout-btn" title="Log Out">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-          <polyline points="16 17 21 12 16 7"></polyline>
-          <line x1="21" y1="12" x2="9" y2="12"></line>
-        </svg>
-      </a>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button type="button" class="change-pwd-icon-btn" id="sidebar-change-pwd-btn" title="Change Admin Password">
+          🔑
+        </button>
+        <a href="/admin/logout" class="logout-btn" title="Log Out">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </a>
+      </div>
     </div>
   </aside>
 
@@ -116,6 +121,9 @@
         <h1 class="page-title" id="current-panel-title">Dashboard Overview</h1>
       </div>
       <div class="topbar-right">
+        <button type="button" class="btn btn-secondary btn-sm" id="topbar-change-pwd-btn">
+          <span>🔑</span> Change Password
+        </button>
         <a href="/" target="_blank" class="btn btn-secondary btn-sm">
           <span>🌐</span> View Live Website
         </a>
@@ -855,6 +863,56 @@
             <button class="btn btn-primary save-section-btn" data-section="page_options">💾 Save Changes</button>
           </div>
         </div>
+
+        <!-- Admin Account & Security Card -->
+        <div class="card" style="margin-top: 24px;">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>🔐 Admin Account &amp; Password Security</h3>
+              <p>Change your administrator password to secure access to the dashboard</p>
+            </div>
+            <span class="badge-status-pill" style="background: #ecfdf5; color: #065f46; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 999px; border: 1px solid #a7f3d0;">Active Account: <strong>admin</strong></span>
+          </div>
+          <div class="card-body">
+            <form id="change-pwd-page-form" onsubmit="return false;">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="page_current_password">Current Password</label>
+                  <div class="pwd-input-wrap">
+                    <input type="password" id="page_current_password" class="form-control" placeholder="Enter current password" autocomplete="current-password" />
+                    <button type="button" class="toggle-pwd-btn" data-target="page_current_password" title="Toggle visibility">👁️</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="page_new_password">New Password</label>
+                  <div class="pwd-input-wrap">
+                    <input type="password" id="page_new_password" class="form-control" placeholder="Minimum 6 characters" autocomplete="new-password" />
+                    <button type="button" class="toggle-pwd-btn" data-target="page_new_password" title="Toggle visibility">👁️</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="page_confirm_password">Confirm New Password</label>
+                  <div class="pwd-input-wrap">
+                    <input type="password" id="page_confirm_password" class="form-control" placeholder="Re-type new password" autocomplete="new-password" />
+                    <button type="button" class="toggle-pwd-btn" data-target="page_confirm_password" title="Toggle visibility">👁️</button>
+                  </div>
+                  <div class="pwd-match-indicator" id="page-pwd-match-indicator"></div>
+                </div>
+                <div class="form-group" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                  <button type="button" class="btn btn-primary" id="btn-save-pwd-page" style="height: 42px;">
+                    <span>🔑</span> Update Admin Password
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <span class="form-help">Ensure your password is secure. You will use this new password on /admin/login.</span>
+          </div>
+        </div>
       </section>
 
       <!-- PANEL: Media Library -->
@@ -1230,6 +1288,60 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="cancel-media-picker-btn">Cancel</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-backdrop" id="change-pwd-modal">
+    <div class="modal-dialog" style="max-width: 460px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 36px; height: 36px; background: var(--primary-light); color: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;">🔐</div>
+          <div>
+            <h4 style="margin: 0; font-size: 16px; font-weight: 700;">Change Admin Password</h4>
+            <p style="margin: 0; font-size: 12px; color: var(--text-muted);">Update your portal login credentials</p>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="close-change-pwd-modal-btn">&times;</button>
+      </div>
+      <form id="change-pwd-modal-form" onsubmit="return false;">
+        <div class="modal-body" style="padding: 20px 24px;">
+          <div class="form-group">
+            <label class="form-label" for="modal_current_password">Current Password</label>
+            <div class="pwd-input-wrap">
+              <input type="password" id="modal_current_password" class="form-control" required placeholder="Enter current password" autocomplete="current-password" />
+              <button type="button" class="toggle-pwd-btn" data-target="modal_current_password" title="Toggle visibility">👁️</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="modal_new_password">New Password</label>
+            <div class="pwd-input-wrap">
+              <input type="password" id="modal_new_password" class="form-control" required minlength="6" placeholder="At least 6 characters" autocomplete="new-password" />
+              <button type="button" class="toggle-pwd-btn" data-target="modal_new_password" title="Toggle visibility">👁️</button>
+            </div>
+            <div class="pwd-strength-bar" id="modal-pwd-strength-bar">
+              <div class="pwd-strength-fill" id="modal-pwd-strength-fill"></div>
+            </div>
+            <span class="pwd-hint-text" id="modal-pwd-hint">Minimum 6 characters</span>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="modal_confirm_password">Confirm New Password</label>
+            <div class="pwd-input-wrap">
+              <input type="password" id="modal_confirm_password" class="form-control" required minlength="6" placeholder="Re-type new password" autocomplete="new-password" />
+              <button type="button" class="toggle-pwd-btn" data-target="modal_confirm_password" title="Toggle visibility">👁️</button>
+            </div>
+            <div class="pwd-match-indicator" id="modal-pwd-match-indicator"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancel-change-pwd-modal-btn">Cancel</button>
+          <button type="button" class="btn btn-primary" id="submit-change-pwd-modal-btn">
+            <span>💾</span> Save New Password
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 

@@ -223,7 +223,7 @@ def init_db_defaults():
             desc_obj = json.loads(admin.description) if admin.description else {}
         except Exception:
             desc_obj = {}
-        if not desc_obj.get("hashed_password") or not check_password_hash(desc_obj.get("hashed_password", ""), "@P@ssw0rd"):
+        if not desc_obj.get("hashed_password"):
             desc_obj["role"] = "admin"
             desc_obj["hashed_password"] = hashed_pwd
             admin.description = json.dumps(desc_obj)
@@ -390,6 +390,57 @@ def api_me():
     if user:
         return jsonify({"authenticated": True, "username": user.name, "is_admin": user.name == "admin"})
     return jsonify({"authenticated": False}), 200
+
+@app.route("/api/admin/change-password", methods=["POST"])
+@admin_required
+def api_change_password():
+    user = get_current_user()
+    if not user or user.name != "admin":
+        return jsonify({"error": "Admin access required"}), 403
+
+    data = request.get_json(silent=True) or {}
+    current_password = (data.get("current_password") or "").strip()
+    new_password = (data.get("new_password") or "").strip()
+    confirm_password = (data.get("confirm_password") or "").strip()
+
+    if not current_password:
+        return jsonify({"error": "Please enter your current password."}), 400
+    if not new_password:
+        return jsonify({"error": "Please enter a new password."}), 400
+    if len(new_password) < 6:
+        return jsonify({"error": "New password must be at least 6 characters long."}), 400
+    if new_password != confirm_password:
+        return jsonify({"error": "New password and confirmation password do not match."}), 400
+
+    try:
+        desc_obj = json.loads(user.description) if user.description else {}
+    except Exception:
+        desc_obj = {}
+
+    stored_hashed_pwd = desc_obj.get("hashed_password") if isinstance(desc_obj, dict) else None
+    valid = False
+    if stored_hashed_pwd:
+        try:
+            valid = check_password_hash(stored_hashed_pwd, current_password)
+        except Exception:
+            valid = False
+    elif user.name == "admin" and current_password == "@P@ssw0rd":
+        valid = True
+
+    if not valid:
+        return jsonify({"error": "Current password is incorrect. Please verify and try again."}), 400
+
+    new_hash = generate_password_hash(new_password)
+    desc_obj["role"] = "admin"
+    desc_obj["hashed_password"] = new_hash
+    desc_obj["password_updated_at"] = datetime.utcnow().isoformat()
+    user.description = json.dumps(desc_obj)
+    db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "message": "Password updated successfully! Please use your new password next time you log in."
+    })
 
 # -----------------------------
 # Section Configuration API

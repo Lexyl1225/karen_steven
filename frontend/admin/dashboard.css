@@ -1638,3 +1638,93 @@ textarea.form-control {
     border: 1px solid #cccccc !important;
   }
 }
+
+/* ==========================================================================
+   PASSWORD MANAGEMENT & SECURITY STYLES
+   ========================================================================== */
+.change-pwd-icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #ffffff;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.change-pwd-icon-btn:hover {
+  background: var(--primary);
+  transform: translateY(-1px);
+}
+
+.pwd-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pwd-input-wrap input {
+  padding-right: 44px;
+}
+
+.toggle-pwd-btn {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 6px;
+  color: var(--text-muted);
+  opacity: 0.7;
+  transition: opacity 0.2s, transform 0.2s;
+  user-select: none;
+}
+
+.toggle-pwd-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.pwd-strength-bar {
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.pwd-strength-fill {
+  height: 100%;
+  width: 0%;
+  background: #ef4444;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.pwd-hint-text {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  display: block;
+}
+
+.pwd-match-indicator {
+  font-size: 11.5px;
+  margin-top: 4px;
+  font-weight: 600;
+  display: block;
+  min-height: 18px;
+}
+
+.pwd-match-indicator.matched {
+  color: #10b981;
+}
+
+.pwd-match-indicator.mismatched {
+  color: #ef4444;
+}

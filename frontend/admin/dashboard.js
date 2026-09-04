@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupColorPreviews();
   setupSpotifyPreview();
   setupRsvpManagement();
+  setupChangePassword();
 
   // Load Data
   await loadAllSections();
@@ -1830,6 +1831,268 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.downloadQuickQrOnly = function() {
     downloadQrOnly();
   };
+
+  /* ==========================================================================
+     ADMIN PASSWORD MANAGEMENT
+     ========================================================================== */
+  function setupChangePassword() {
+    const modal = document.getElementById("change-pwd-modal");
+
+    function openPasswordModal() {
+      if (!modal) return;
+      modal.classList.add("active");
+      const curInput = document.getElementById("modal_current_password");
+      if (curInput) {
+        curInput.value = "";
+        curInput.focus();
+      }
+      const newInput = document.getElementById("modal_new_password");
+      if (newInput) newInput.value = "";
+      const confirmInput = document.getElementById("modal_confirm_password");
+      if (confirmInput) confirmInput.value = "";
+
+      const fill = document.getElementById("modal-pwd-strength-fill");
+      if (fill) fill.style.width = "0%";
+      const hint = document.getElementById("modal-pwd-hint");
+      if (hint) hint.textContent = "Minimum 6 characters";
+      const match = document.getElementById("modal-pwd-match-indicator");
+      if (match) {
+        match.textContent = "";
+        match.className = "pwd-match-indicator";
+      }
+    }
+
+    function closePasswordModal() {
+      if (modal) modal.classList.remove("active");
+    }
+
+    // Modal open triggers
+    const topbarBtn = document.getElementById("topbar-change-pwd-btn");
+    if (topbarBtn) topbarBtn.addEventListener("click", openPasswordModal);
+
+    const sidebarBtn = document.getElementById("sidebar-change-pwd-btn");
+    if (sidebarBtn) sidebarBtn.addEventListener("click", openPasswordModal);
+
+    const sidebarProfile = document.getElementById("sidebar-admin-profile");
+    if (sidebarProfile) sidebarProfile.addEventListener("click", openPasswordModal);
+
+    // Modal close triggers
+    const closeBtn = document.getElementById("close-change-pwd-modal-btn");
+    if (closeBtn) closeBtn.addEventListener("click", closePasswordModal);
+
+    const cancelBtn = document.getElementById("cancel-change-pwd-modal-btn");
+    if (cancelBtn) cancelBtn.addEventListener("click", closePasswordModal);
+
+    if (modal) {
+      modal.addEventListener("click", e => {
+        if (e.target === modal) closePasswordModal();
+      });
+    }
+
+    // Password visibility reveal toggles
+    document.querySelectorAll(".toggle-pwd-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.getAttribute("data-target");
+        const targetInput = document.getElementById(targetId);
+        if (!targetInput) return;
+        if (targetInput.type === "password") {
+          targetInput.type = "text";
+          btn.textContent = "🙈";
+        } else {
+          targetInput.type = "password";
+          btn.textContent = "👁️";
+        }
+      });
+    });
+
+    // Password strength evaluation
+    function evaluatePasswordStrength(pwd) {
+      if (!pwd) return { score: 0, text: "Minimum 6 characters", color: "#ef4444" };
+      let score = 0;
+      if (pwd.length >= 6) score += 25;
+      if (pwd.length >= 10) score += 25;
+      if (/[0-9]/.test(pwd)) score += 25;
+      if (/[A-Z]/.test(pwd) || /[^A-Za-z0-9]/.test(pwd)) score += 25;
+
+      let text = "Weak";
+      let color = "#ef4444";
+      if (score >= 75) {
+        text = "Strong Password ✓";
+        color = "#10b981";
+      } else if (score >= 50) {
+        text = "Medium Password";
+        color = "#f59e0b";
+      } else {
+        text = "Weak - use 6+ chars & numbers";
+        color = "#ef4444";
+      }
+      return { score, text, color };
+    }
+
+    // Modal password listeners
+    const modalNew = document.getElementById("modal_new_password");
+    const modalConfirm = document.getElementById("modal_confirm_password");
+    const modalFill = document.getElementById("modal-pwd-strength-fill");
+    const modalHint = document.getElementById("modal-pwd-hint");
+    const modalMatch = document.getElementById("modal-pwd-match-indicator");
+
+    function checkModalMatch() {
+      if (!modalNew || !modalConfirm || !modalMatch) return;
+      const val1 = modalNew.value;
+      const val2 = modalConfirm.value;
+      if (!val2) {
+        modalMatch.textContent = "";
+        modalMatch.className = "pwd-match-indicator";
+        return;
+      }
+      if (val1 === val2) {
+        modalMatch.textContent = "✓ Passwords match";
+        modalMatch.className = "pwd-match-indicator matched";
+      } else {
+        modalMatch.textContent = "✗ Passwords do not match";
+        modalMatch.className = "pwd-match-indicator mismatched";
+      }
+    }
+
+    if (modalNew) {
+      modalNew.addEventListener("input", () => {
+        const res = evaluatePasswordStrength(modalNew.value);
+        if (modalFill) {
+          modalFill.style.width = res.score + "%";
+          modalFill.style.backgroundColor = res.color;
+        }
+        if (modalHint) {
+          modalHint.textContent = res.text;
+          modalHint.style.color = res.color;
+        }
+        checkModalMatch();
+      });
+    }
+
+    if (modalConfirm) {
+      modalConfirm.addEventListener("input", checkModalMatch);
+    }
+
+    // In-page password listeners (Page Options tab)
+    const pageNew = document.getElementById("page_new_password");
+    const pageConfirm = document.getElementById("page_confirm_password");
+    const pageMatch = document.getElementById("page-pwd-match-indicator");
+
+    function checkPageMatch() {
+      if (!pageNew || !pageConfirm || !pageMatch) return;
+      const val1 = pageNew.value;
+      const val2 = pageConfirm.value;
+      if (!val2) {
+        pageMatch.textContent = "";
+        pageMatch.className = "pwd-match-indicator";
+        return;
+      }
+      if (val1 === val2) {
+        pageMatch.textContent = "✓ Passwords match";
+        pageMatch.className = "pwd-match-indicator matched";
+      } else {
+        pageMatch.textContent = "✗ Passwords do not match";
+        pageMatch.className = "pwd-match-indicator mismatched";
+      }
+    }
+
+    if (pageNew) pageNew.addEventListener("input", checkPageMatch);
+    if (pageConfirm) pageConfirm.addEventListener("input", checkPageMatch);
+
+    // API submission logic
+    async function executePasswordChange(currentPassword, newPassword, confirmPassword, btnElement, isModal) {
+      if (!currentPassword) {
+        showToast("Please enter your current password.", "error");
+        return;
+      }
+      if (!newPassword) {
+        showToast("Please enter a new password.", "error");
+        return;
+      }
+      if (newPassword.length < 6) {
+        showToast("New password must be at least 6 characters long.", "error");
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        showToast("New password and confirmation do not match.", "error");
+        return;
+      }
+
+      const originalBtnHtml = btnElement ? btnElement.innerHTML : "";
+      if (btnElement) {
+        btnElement.disabled = true;
+        btnElement.innerHTML = "<span>⏳</span> Updating...";
+      }
+
+      try {
+        const resp = await fetch("/api/admin/change-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            current_password: currentPassword,
+            new_password: newPassword,
+            confirm_password: confirmPassword
+          })
+        });
+
+        const result = await resp.json().catch(() => ({}));
+
+        if (!resp.ok) {
+          throw new Error(result.error || "Failed to update password.");
+        }
+
+        showToast(result.message || "Password changed successfully!", "success");
+
+        if (isModal) {
+          closePasswordModal();
+        } else {
+          setVal("page_current_password", "");
+          setVal("page_new_password", "");
+          setVal("page_confirm_password", "");
+          if (pageMatch) pageMatch.textContent = "";
+        }
+      } catch (err) {
+        showToast(err.message, "error");
+      } finally {
+        if (btnElement) {
+          btnElement.disabled = false;
+          btnElement.innerHTML = originalBtnHtml;
+        }
+      }
+    }
+
+    // Modal submit handler
+    const modalSubmitBtn = document.getElementById("submit-change-pwd-modal-btn");
+    const modalForm = document.getElementById("change-pwd-modal-form");
+    if (modalSubmitBtn) {
+      modalSubmitBtn.addEventListener("click", () => {
+        const cur = getVal("modal_current_password");
+        const nw = getVal("modal_new_password");
+        const conf = getVal("modal_confirm_password");
+        executePasswordChange(cur, nw, conf, modalSubmitBtn, true);
+      });
+    }
+    if (modalForm) {
+      modalForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const cur = getVal("modal_current_password");
+        const nw = getVal("modal_new_password");
+        const conf = getVal("modal_confirm_password");
+        executePasswordChange(cur, nw, conf, modalSubmitBtn, true);
+      });
+    }
+
+    // In-page submit handler (Page Options tab)
+    const pageSaveBtn = document.getElementById("btn-save-pwd-page");
+    if (pageSaveBtn) {
+      pageSaveBtn.addEventListener("click", () => {
+        const cur = getVal("page_current_password");
+        const nw = getVal("page_new_password");
+        const conf = getVal("page_confirm_password");
+        executePasswordChange(cur, nw, conf, pageSaveBtn, false);
+      });
+    }
+  }
 
   /* ==========================================================================
      HELPERS & TOASTS
