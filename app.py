@@ -703,4 +703,8 @@ def delete_user(user_id):
     return jsonify({"message": "User deleted"})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    host = os.environ.get("HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("DEBUG", "False").lower() in ["true", "1", "t"]
+    app.run(host=host, port=port, debug=debug)
+
