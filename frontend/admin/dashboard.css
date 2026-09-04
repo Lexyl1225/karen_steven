@@ -842,3 +842,799 @@ textarea.form-control {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   QR CODE & PRINTABLE STATIONERY STYLES
+   ========================================================================== */
+
+/* Overview Quick Card */
+.overview-qr-card {
+  border: 1px solid rgba(197, 160, 89, 0.4) !important;
+  background: linear-gradient(135deg, #ffffff 0%, #faf8f5 100%) !important;
+  box-shadow: 0 4px 16px rgba(197, 160, 89, 0.08) !important;
+}
+
+.overview-qr-flex {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.overview-qr-thumb-box {
+  width: 120px;
+  height: 120px;
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.overview-qr-thumb-box img,
+.overview-qr-thumb-box canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.overview-qr-info {
+  flex: 1;
+  min-width: 260px;
+}
+
+.overview-qr-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.overview-qr-domain-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.overview-qr-domain-row code {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.overview-qr-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.overview-qr-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Action Banner */
+.qr-action-banner {
+  background: linear-gradient(135deg, #061530 0%, #153266 50%, #20407a 100%);
+  color: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.qr-action-banner::before {
+  content: "💍";
+  position: absolute;
+  right: -15px;
+  bottom: -20px;
+  font-size: 120px;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+.qr-banner-text h2 {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.qr-banner-text p {
+  font-size: 13px;
+  color: #cbd5e1;
+  max-width: 650px;
+  line-height: 1.5;
+}
+
+.qr-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+/* Grid Layout */
+.qr-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .qr-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Form Controls & Helper Elements */
+.input-group-with-btn {
+  display: flex;
+  gap: 8px;
+}
+
+.input-group-with-btn input {
+  flex: 1;
+}
+
+.domain-presets-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.preset-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.preset-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  background: var(--border-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.encoded-url-preview {
+  background: var(--primary-light);
+  border: 1px solid #d4e2f0;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.encoded-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.encoded-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.encoded-val {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Template Selector Grid */
+.template-selector-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .template-selector-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.template-option {
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #ffffff;
+  position: relative;
+}
+
+.template-option input[type="radio"] {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  accent-color: var(--primary);
+}
+
+.template-option:hover {
+  border-color: var(--accent-blue);
+  background: #fcfdfe;
+}
+
+.template-option.active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.template-icon {
+  font-size: 26px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.template-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-right: 20px;
+}
+
+.template-info strong {
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.template-info span {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+/* Theme Preset Pills */
+.theme-preset-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.theme-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.theme-pill:hover {
+  border-color: var(--primary);
+}
+
+.theme-pill.active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+  font-weight: 700;
+  color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.swatch-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+
+/* Preview Card & Stage */
+.sticky-preview-card {
+  position: sticky;
+  top: 84px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.preview-badge-status {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+}
+
+.preview-card-body {
+  background: #f1f5f9;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wedding-card-print-stage {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ==========================================================================
+   THE PRINTABLE WEDDING QR CARD (ON SCREEN & PRINT)
+   ========================================================================== */
+.wedding-qr-printable-card {
+  width: 360px;
+  min-height: 520px;
+  background: var(--card-bg-color, #ffffff);
+  border: 2px solid var(--card-accent-color, #c5a059);
+  padding: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.14);
+  position: relative;
+  transition: all 0.3s;
+  color: var(--card-text-color, #04225c);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Corner Flourishes */
+.card-corner-flourish {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-style: solid;
+  border-color: var(--card-accent-color, #c5a059);
+  pointer-events: none;
+}
+
+.card-corner-flourish.top-left {
+  top: 5px;
+  left: 5px;
+  border-width: 2px 0 0 2px;
+}
+
+.card-corner-flourish.top-right {
+  top: 5px;
+  right: 5px;
+  border-width: 2px 2px 0 0;
+}
+
+.card-corner-flourish.bottom-left {
+  bottom: 5px;
+  left: 5px;
+  border-width: 0 0 2px 2px;
+}
+
+.card-corner-flourish.bottom-right {
+  bottom: 5px;
+  right: 5px;
+  border-width: 0 2px 2px 0;
+}
+
+/* Inner Double Frame */
+.card-inner-frame {
+  border: 1px solid var(--card-accent-color, #c5a059);
+  padding: 22px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+/* Crest & Monogram */
+.card-crest {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.crest-icon-box {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--card-accent-color, #c5a059);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(197, 160, 89, 0.08);
+  margin-bottom: 4px;
+}
+
+.crest-rings {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.crest-monogram {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--card-accent-color, #c5a059);
+}
+
+/* Couple Names */
+.card-couple-names {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--card-text-color, #04225c);
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.card-sub-rule {
+  width: 60px;
+  height: 1px;
+  background: var(--card-accent-color, #c5a059);
+  margin: 0 auto 8px;
+}
+
+.card-headline-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--card-accent-color, #c5a059);
+  margin-bottom: 16px;
+}
+
+/* QR Code Box */
+.card-qr-box {
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.qr-canvas-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-canvas-holder canvas,
+.qr-canvas-holder img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.qr-center-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 38px;
+  height: 38px;
+  background: #ffffff;
+  border: 2px solid var(--card-accent-color, #c5a059);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Instructions */
+.card-instruction-text {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: #475569;
+  max-width: 88%;
+  margin: 0 auto 12px;
+  font-weight: 500;
+}
+
+/* Wi-Fi Box */
+.card-wifi-box {
+  background: rgba(0,0,0,0.02);
+  border: 1px dashed var(--card-accent-color, #c5a059);
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin: 0 auto 12px;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+}
+
+.wifi-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.wifi-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--card-accent-color, #c5a059);
+}
+
+.wifi-credentials {
+  font-size: 11px;
+  color: var(--text-main);
+}
+
+/* Footer info */
+.card-footer-info {
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.card-date-venue {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--card-text-color, #04225c);
+  margin-bottom: 2px;
+}
+
+.card-domain-slug {
+  font-size: 9.5px;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+  word-break: break-all;
+}
+
+/* Template Formats */
+.wedding-qr-printable-card.tpl-insert_card {
+  width: 320px;
+  min-height: 480px;
+  padding: 8px;
+}
+
+.wedding-qr-printable-card.tpl-insert_card .card-inner-frame {
+  padding: 16px 14px 14px;
+}
+
+.wedding-qr-printable-card.tpl-insert_card .card-couple-names {
+  font-size: 19px;
+}
+
+.wedding-qr-printable-card.tpl-poster {
+  width: 380px;
+  min-height: 560px;
+}
+
+.wedding-qr-printable-card.tpl-poster .card-couple-names {
+  font-size: 26px;
+  letter-spacing: 0.15em;
+}
+
+.wedding-qr-printable-card.tpl-minimal_qr {
+  width: 300px;
+  min-height: 380px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  padding: 18px;
+}
+
+.wedding-qr-printable-card.tpl-minimal_qr .card-inner-frame {
+  border: none;
+  padding: 0;
+}
+
+.wedding-qr-printable-card.tpl-minimal_qr .card-corner-flourish,
+.wedding-qr-printable-card.tpl-minimal_qr .card-crest,
+.wedding-qr-printable-card.tpl-minimal_qr .card-sub-rule {
+  display: none;
+}
+
+/* Preview Action Toolbar */
+.preview-actions-toolbar {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-group-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .btn-group-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.print-tip-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   PRINT MEDIA QUERY RULES
+   ========================================================================== */
+@media print {
+  @page {
+    size: auto;
+    margin: 12mm;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide entire admin UI */
+  .sidebar,
+  .topbar,
+  .mobile-toggle,
+  .toast-container,
+  .modal-backdrop,
+  .qr-action-banner,
+  .qr-controls-col,
+  .preview-actions-toolbar,
+  .card-header,
+  .stats-grid,
+  .nav-item,
+  #toast-container,
+  button {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  .main-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .content-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+
+  .tab-panel {
+    display: none !important;
+  }
+
+  .tab-panel#panel-qrcode,
+  .tab-panel#panel-overview {
+    display: block !important;
+  }
+
+  .qr-dashboard-grid {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .qr-preview-col,
+  .sticky-preview-card,
+  .preview-card-body,
+  .wedding-card-print-stage {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
+  /* Center the printable card on paper */
+  .wedding-qr-printable-card {
+    margin: 10mm auto !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    width: 4.8in !important;
+    min-height: 6.8in !important;
+    border: 2px solid var(--card-accent-color, #c5a059) !important;
+  }
+
+  .wedding-qr-printable-card.tpl-insert_card {
+    width: 3.8in !important;
+    min-height: 5.6in !important;
+  }
+
+  .wedding-qr-printable-card.tpl-poster {
+    width: 7.2in !important;
+    min-height: 9.8in !important;
+  }
+
+  .card-qr-box {
+    box-shadow: none !important;
+    border: 1px solid #cccccc !important;
+  }
+}

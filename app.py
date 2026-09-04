@@ -1,6 +1,8 @@
-from flask import Flask, request, jsonify, send_from_directory, redirect
+from flask import Flask, request, jsonify, send_from_directory, redirect, send_file
 from flask_sqlalchemy import SQLAlchemy
 import os
+import io
+import qrcode
 import json
 import secrets
 import time
@@ -188,6 +190,22 @@ DEFAULT_SECTIONS = {
         "primary_color": "#04225c",
         "secondary_color": "#742374",
         "accent_color": "#4a6984"
+    },
+    "qr_code": {
+        "domain_url": "",
+        "couple_names": "Karen & Steven",
+        "headline": "You Are Cordially Invited",
+        "instructions": "Scan with your phone camera to view schedule, map directions, and submit RSVP.",
+        "date_venue": "September 18, 2026 • Santiago City, Isabela",
+        "card_style": "table_card",
+        "theme_color": "navy_gold",
+        "qr_color": "#04225c",
+        "bg_color": "#ffffff",
+        "accent_color": "#c5a059",
+        "show_monogram": True,
+        "show_wifi": False,
+        "wifi_ssid": "Alleria_Guest_WiFi",
+        "wifi_password": "weddingcelebration"
     }
 }
 
@@ -416,6 +434,42 @@ def update_section(section_name):
 
     db.session.commit()
     return jsonify({"message": f"Section '{section_name}' updated successfully", "section": section_name, "data": data})
+
+# -----------------------------
+# QR Code Generator API
+# -----------------------------
+@app.route("/api/admin/qr", methods=["GET"])
+def api_generate_qr():
+    raw_url = request.args.get("url") or request.host_url
+    fill_color = request.args.get("color", "#04225c")
+    back_color = request.args.get("bg", "#ffffff")
+    size = request.args.get("size", 10, type=int)
+
+    # Basic clamp on size for safety
+    size = max(4, min(size, 40))
+
+    try:
+        qr = qrcode.QRCode(
+            version=None,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
+            box_size=size,
+            border=2,
+        )
+        qr.add_data(raw_url)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color=fill_color, back_color=back_color)
+        buf = io.BytesIO()
+        img.save(buf, format="PNG")
+        buf.seek(0)
+        as_download = request.args.get("download", "0") in ["1", "true"]
+        return send_file(
+            buf,
+            mimetype="image/png",
+            as_attachment=as_download,
+            download_name="karen_steven_wedding_qr.png"
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # -----------------------------
 # File Upload & Media API

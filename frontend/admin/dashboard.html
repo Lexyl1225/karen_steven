@@ -34,6 +34,10 @@
         <span>Media Library</span>
         <span class="nav-badge" id="media-badge-count">0</span>
       </button>
+      <button class="nav-item" data-target="qrcode">
+        <span class="nav-icon">📱</span>
+        <span>QR Code &amp; Print</span>
+      </button>
 
       <div class="menu-category">Website Sections</div>
       <button class="nav-item" data-target="home">
@@ -175,7 +179,43 @@
               <button class="btn btn-secondary" onclick="navigateToTab('playlist')">🎵 Playlist</button>
               <button class="btn btn-secondary" onclick="navigateToTab('rsvp')">💌 Manage RSVPs</button>
               <button class="btn btn-secondary" onclick="navigateToTab('prenup')">📷 Prenup Gallery</button>
+              <button class="btn btn-secondary" onclick="navigateToTab('qrcode')">📱 QR Code &amp; Print</button>
               <button class="btn btn-primary" onclick="navigateToTab('media')">⬆️ Upload Media</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wedding Website QR Code Quick Card -->
+        <div class="card overview-qr-card">
+          <div class="card-header">
+            <div class="card-header-title">
+              <h3>📱 Wedding Website QR Code</h3>
+              <p>Domain QR code ready for printing on table standees and invitation inserts</p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-secondary btn-sm" onclick="quickPrintWeddingCard()">🖨️ Quick Print</button>
+              <button class="btn btn-primary btn-sm" onclick="navigateToTab('qrcode')">🎨 Design &amp; Print &rarr;</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="overview-qr-flex">
+              <div class="overview-qr-thumb-box" id="overview-mini-qr">
+                <!-- Mini QR rendered via JS -->
+              </div>
+              <div class="overview-qr-info">
+                <h4 class="overview-qr-title">Karen &amp; Steven Wedding Website</h4>
+                <div class="overview-qr-domain-row">
+                  <span class="badge-label">Destination URL:</span>
+                  <code id="overview-qr-url-code">Loading URL...</code>
+                </div>
+                <p class="overview-qr-desc">
+                  This scannable QR code takes your guests straight to your wedding invitation website and RSVP page. You can customize colors, card styles (Table Standee 5"×7", Invitation Insert, Poster), and print directly from the dashboard.
+                </p>
+                <div class="overview-qr-actions">
+                  <button class="btn btn-outline btn-sm" onclick="navigateToTab('qrcode')">⚙️ Change Domain or Destination</button>
+                  <button class="btn btn-outline btn-sm" onclick="downloadQuickQrOnly()">⬇️ Download QR Image</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -857,6 +897,323 @@
         </div>
       </section>
 
+      <!-- PANEL: QR Code & Print -->
+      <section class="tab-panel" id="panel-qrcode">
+        <!-- Top Action Banner -->
+        <div class="qr-action-banner">
+          <div class="qr-banner-text">
+            <h2>📱 Wedding Website QR Code &amp; Stationery Printing</h2>
+            <p>Generate, customize, and print high-resolution QR codes linking to your wedding website. Create elegant table standees, invitation inserts, and welcome signboards directly from this dashboard.</p>
+          </div>
+          <div class="qr-banner-actions">
+            <button class="btn btn-primary" id="btn-print-banner">
+              <span>🖨️</span> Print Wedding Card
+            </button>
+            <button class="btn btn-secondary" id="btn-print-clean-win">
+              <span>🗗</span> Print in Clean Window
+            </button>
+            <button class="btn btn-secondary" id="btn-download-card-banner">
+              <span>🖼️</span> Download PNG
+            </button>
+            <button class="btn btn-primary save-section-btn" data-section="qr_code">
+              <span>💾</span> Save Settings
+            </button>
+          </div>
+        </div>
+
+        <div class="qr-dashboard-grid">
+          <!-- Left Column: Customization Controls -->
+          <div class="qr-controls-col">
+
+            <!-- Card 1: Domain & Link Settings -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-title">
+                  <h3>🌐 Website Domain &amp; Link Settings</h3>
+                  <p>Specify the web address guests will land on when scanning</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="form-label" for="qr_domain_url">Website Domain / Full URL</label>
+                  <div class="input-group-with-btn">
+                    <input type="text" id="qr_domain_url" class="form-control" placeholder="e.g. https://karen-steven.com or http://localhost:5000" />
+                    <button type="button" class="btn btn-secondary" id="qr-test-url-btn" title="Open this URL in a new browser tab">🔗 Open</button>
+                  </div>
+                  <span class="form-help">Leave empty or use the buttons below to automatically use your active server address.</span>
+                </div>
+
+                <!-- Domain Quick Presets -->
+                <div class="domain-presets-container">
+                  <span class="preset-label">Quick Presets:</span>
+                  <div class="preset-buttons">
+                    <button type="button" class="btn btn-sm btn-outline" id="preset-current-domain">🌐 Current Domain</button>
+                    <button type="button" class="btn btn-sm btn-outline" id="preset-tailscale-magic">🔒 Tailscale MagicDNS</button>
+                    <button type="button" class="btn btn-sm btn-outline" id="preset-localhost">💻 Localhost (5000)</button>
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 16px;">
+                  <label class="form-label" for="qr_destination_page">QR Code Destination Link Target</label>
+                  <select id="qr_destination_page" class="form-control">
+                    <option value="">Full Wedding Homepage (/)</option>
+                    <option value="#rsvp">Direct to RSVP / Guestbook Section (/#rsvp)</option>
+                    <option value="#location">Ceremony &amp; Reception Venues (/#location)</option>
+                    <option value="#timeline">Timeline &amp; Schedule (/#timeline)</option>
+                    <option value="#dress_code">Dress Code Guidelines (/#dress_code)</option>
+                    <option value="#prenup">Prenup Photo Gallery (/#prenup)</option>
+                  </select>
+                  <span class="form-help">Choose whether guests land at the top of the page or scroll straight to RSVP/location.</span>
+                </div>
+
+                <div class="encoded-url-preview">
+                  <div class="encoded-info">
+                    <span class="encoded-label">Encoded QR Destination:</span>
+                    <span class="encoded-val" id="qr-encoded-url-display">http://localhost:5000</span>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" id="qr-copy-url-btn" title="Copy to clipboard">📋 Copy</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Stationery Template & Design -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-header-title">
+                  <h3>🎨 Stationery Template &amp; Styling</h3>
+                  <p>Choose template layout, colors, and typography details</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- Template Selection -->
+                <div class="form-group">
+                  <label class="form-label">Stationery Template Layout</label>
+                  <div class="template-selector-grid">
+                    <label class="template-option active" data-template="table_card">
+                      <input type="radio" name="qr_card_template" value="table_card" checked />
+                      <div class="template-icon">🏷️</div>
+                      <div class="template-info">
+                        <strong>5" &times; 7" Table Standee</strong>
+                        <span>Ideal for acrylic frames on reception &amp; cocktail tables</span>
+                      </div>
+                    </label>
+                    <label class="template-option" data-template="insert_card">
+                      <input type="radio" name="qr_card_template" value="insert_card" />
+                      <div class="template-icon">💌</div>
+                      <div class="template-info">
+                        <strong>4" &times; 6" Invitation Insert</strong>
+                        <span>Fits beautifully inside mailed wedding invitation envelopes</span>
+                      </div>
+                    </label>
+                    <label class="template-option" data-template="poster">
+                      <input type="radio" name="qr_card_template" value="poster" />
+                      <div class="template-icon">🖼️</div>
+                      <div class="template-info">
+                        <strong>A4 / 8" &times; 10" Welcome Sign</strong>
+                        <span>Large display for easel stands at church &amp; reception entrance</span>
+                      </div>
+                    </label>
+                    <label class="template-option" data-template="minimal_qr">
+                      <input type="radio" name="qr_card_template" value="minimal_qr" />
+                      <div class="template-icon">🔲</div>
+                      <div class="template-info">
+                        <strong>Minimalist QR Only</strong>
+                        <span>Clean high-res QR for custom graphic design in Canva / Photoshop</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Theme Color Palette -->
+                <div class="form-group">
+                  <label class="form-label">Theme Color Preset</label>
+                  <div class="theme-preset-pills">
+                    <button type="button" class="theme-pill active" data-theme="navy_gold">
+                      <span class="swatch-circle" style="background: linear-gradient(135deg, #04225c 50%, #c5a059 50%);"></span>
+                      <span>Navy &amp; Gold</span>
+                    </button>
+                    <button type="button" class="theme-pill" data-theme="rose_gold">
+                      <span class="swatch-circle" style="background: linear-gradient(135deg, #b76e79 50%, #d8a48f 50%);"></span>
+                      <span>Rose Gold</span>
+                    </button>
+                    <button type="button" class="theme-pill" data-theme="champagne">
+                      <span class="swatch-circle" style="background: linear-gradient(135deg, #997327 50%, #e8d5a8 50%);"></span>
+                      <span>Champagne</span>
+                    </button>
+                    <button type="button" class="theme-pill" data-theme="classic_black">
+                      <span class="swatch-circle" style="background: #000000;"></span>
+                      <span>Classic Black</span>
+                    </button>
+                    <button type="button" class="theme-pill" data-theme="custom">
+                      <span class="swatch-circle" style="background: conic-gradient(red, yellow, green, cyan, blue, magenta, red);"></span>
+                      <span>Custom</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Custom Color Pickers -->
+                <div class="form-grid" id="custom-colors-container">
+                  <div class="form-group">
+                    <label class="form-label" for="qr_color">QR Foreground Color</label>
+                    <input type="color" id="qr_color" class="form-control" value="#04225c" style="height: 42px; padding: 4px;" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="qr_bg_color">Card Background Color</label>
+                    <input type="color" id="qr_bg_color" class="form-control" value="#ffffff" style="height: 42px; padding: 4px;" />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="qr_accent_color">Border &amp; Foil Accent</label>
+                    <input type="color" id="qr_accent_color" class="form-control" value="#c5a059" style="height: 42px; padding: 4px;" />
+                  </div>
+                </div>
+
+                <!-- Card Content Details -->
+                <div class="form-group">
+                  <label class="form-label" for="qr_couple_names">Couple Names / Title</label>
+                  <input type="text" id="qr_couple_names" class="form-control" value="Karen &amp; Steven" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="qr_headline">Headline / Invitation Tagline</label>
+                  <input type="text" id="qr_headline" class="form-control" value="You Are Cordially Invited" />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="qr_instructions">Call-to-Action Scanning Prompt</label>
+                  <textarea id="qr_instructions" class="form-control" rows="2">Scan with your phone camera to view schedule, map directions, and submit RSVP.</textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="qr_date_venue">Date &amp; Location Footer</label>
+                  <input type="text" id="qr_date_venue" class="form-control" value="September 18, 2026 &bull; Santiago City, Isabela" />
+                </div>
+
+                <!-- Center Monogram & Wi-Fi Toggles -->
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                      <input type="checkbox" id="qr_show_monogram" checked style="accent-color: var(--primary); width: 18px; height: 18px;" />
+                      <span><strong>Show Center Wedding Ring 💍</strong></span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                      <input type="checkbox" id="qr_show_wifi" style="accent-color: var(--primary); width: 18px; height: 18px;" />
+                      <span><strong>Include Guest Wi-Fi on Card</strong></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div id="wifi-settings-container" style="display: none; background: var(--border-light); padding: 14px; border-radius: var(--radius-sm); margin-top: 10px;">
+                  <div class="form-grid">
+                    <div class="form-group" style="margin-bottom: 0;">
+                      <label class="form-label" for="qr_wifi_ssid">Wi-Fi Network Name (SSID)</label>
+                      <input type="text" id="qr_wifi_ssid" class="form-control" placeholder="Alleria_Guest_WiFi" />
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                      <label class="form-label" for="qr_wifi_password">Wi-Fi Password</label>
+                      <input type="text" id="qr_wifi_password" class="form-control" placeholder="weddingcelebration" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <span class="form-help">Live preview updates automatically as you type or change settings.</span>
+                <button class="btn btn-primary save-section-btn" data-section="qr_code">💾 Save Settings</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Live Printable Card Preview -->
+          <div class="qr-preview-col">
+            <div class="card sticky-preview-card">
+              <div class="card-header">
+                <div class="card-header-title">
+                  <h3>🖨️ Live Printable Card Preview</h3>
+                  <p>High-resolution preview of your printed wedding stationery</p>
+                </div>
+                <div class="preview-badge-status" id="preview-template-badge">5" &times; 7" Table Standee</div>
+              </div>
+              <div class="card-body preview-card-body">
+                
+                <!-- The Actual Printable Wedding Card Element -->
+                <div class="wedding-card-print-stage">
+                  <div class="wedding-qr-printable-card" id="printable-wedding-card">
+                    <div class="card-corner-flourish top-left"></div>
+                    <div class="card-corner-flourish top-right"></div>
+                    <div class="card-corner-flourish bottom-left"></div>
+                    <div class="card-corner-flourish bottom-right"></div>
+
+                    <div class="card-inner-frame">
+                      <!-- Top Crest / Monogram -->
+                      <div class="card-crest">
+                        <div class="crest-icon-box">
+                          <span class="crest-rings">💍</span>
+                        </div>
+                        <div class="crest-monogram">K &amp; S</div>
+                      </div>
+
+                      <!-- Couple Names -->
+                      <h2 class="card-couple-names" id="preview-couple-names">Karen &amp; Steven</h2>
+                      <div class="card-sub-rule"></div>
+                      <div class="card-headline-text" id="preview-headline">You Are Cordially Invited</div>
+
+                      <!-- QR Code Container -->
+                      <div class="card-qr-box">
+                        <div id="live-qr-code-element" class="qr-canvas-holder"></div>
+                        <div class="qr-center-badge" id="preview-center-badge">💍</div>
+                      </div>
+
+                      <!-- Call to Action Prompt -->
+                      <div class="card-instruction-text" id="preview-instructions">
+                        Scan with your phone camera to view schedule, map directions, and submit RSVP.
+                      </div>
+
+                      <!-- Wi-Fi Box (optional) -->
+                      <div class="card-wifi-box" id="preview-wifi-box" style="display: none;">
+                        <div class="wifi-icon">📶</div>
+                        <div>
+                          <div class="wifi-label">GUEST WI-FI</div>
+                          <div class="wifi-credentials" id="preview-wifi-creds">Network: <strong>Alleria_Guest_WiFi</strong> &bull; Pass: <strong>weddingcelebration</strong></div>
+                        </div>
+                      </div>
+
+                      <!-- Footer Date & Venue -->
+                      <div class="card-footer-info">
+                        <div class="card-date-venue" id="preview-date-venue">September 18, 2026 &bull; Santiago City, Isabela</div>
+                        <div class="card-domain-slug" id="preview-domain-slug">http://localhost:5000</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Print & Export Action Toolbar -->
+                <div class="preview-actions-toolbar">
+                  <button class="btn btn-primary btn-block" id="btn-print-direct" style="padding: 12px; font-size: 15px; font-weight: 700;">
+                    <span>🖨️</span> Print Wedding Card Now
+                  </button>
+                  <div class="btn-group-row">
+                    <button class="btn btn-secondary" id="btn-open-print-win">
+                      <span>🗗</span> Print in Clean Window
+                    </button>
+                    <button class="btn btn-secondary" id="btn-download-card-png">
+                      <span>🖼️</span> Download Card PNG
+                    </button>
+                    <button class="btn btn-secondary" id="btn-download-qr-only">
+                      <span>📱</span> QR Code Only
+                    </button>
+                  </div>
+                  <div class="print-tip-box">
+                    💡 <strong>Printing Tip:</strong> In your browser's Print Dialog, choose <em>"Destination: Save as PDF"</em> or your printer, and ensure <strong>"Background graphics"</strong> is checked to include luxury borders and foil colors.
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </main>
   </div>
 
@@ -879,6 +1236,7 @@
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toast-container"></div>
 
+  <script src="/admin/qrcode.min.js"></script>
   <script src="/admin/dashboard.js"></script>
 </body>
 </html>
