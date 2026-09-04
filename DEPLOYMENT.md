@@ -139,3 +139,62 @@ To copy the database out of the container to your host:
 docker cp wedding-web:/app/instance/test.db ./backup_test.db
 docker cp wedding-web:/app/frontend/uploads ./backup_uploads
 ```
+
+---
+
+## 🏔️ Standalone Alpine Linux Container Deployment (with Tailscale Funnel)
+
+If you prefer to run everything inside a single lightweight **Alpine Linux container** at `/var/www/karen-steven`:
+
+### 1. Launch the Alpine Container
+Tailscale requires network permissions and the host TUN device:
+```bash
+docker run -it --name karen-steven-alpine \
+  --device /dev/net/tun:/dev/net/tun \
+  --cap-add=NET_ADMIN \
+  --cap-add=NET_RAW \
+  -v karen_data:/var/www/karen-steven/instance \
+  -v karen_uploads:/var/www/karen-steven/frontend/uploads \
+  -v tailscale_state:/var/lib/tailscale \
+  alpine:latest sh
+```
+
+### 2. Inside the Alpine Container:
+```sh
+# A. Install system packages and native C libraries
+apk update && apk add --no-cache \
+  python3 \
+  py3-pip \
+  py3-pillow \
+  py3-flask \
+  py3-requests \
+  py3-gunicorn \
+  git \
+  tailscale \
+  iptables \
+  ca-certificates
+
+# B. Clone the repository into /var/www/karen-steven
+mkdir -p /var/www
+git clone https://github.com/Lexyl1225/karen_steven.git /var/www/karen-steven
+cd /var/www/karen-steven
+
+# C. Install remaining Python dependencies
+pip install --break-system-packages -r requirements.txt
+
+# D. Start the Tailscale daemon in the background
+tailscaled --state=/var/lib/tailscale/tailscaled.state &
+
+# E. Authenticate with Tailscale (replace with your auth key or run interactive login)
+tailscale up --hostname=karen-steven-wedding --authkey=tskey-auth-YOUR_KEY
+
+# F. Start the Flask application
+python3 app.py &
+# (Or production-grade with 4 workers: gunicorn -w 4 -b 0.0.0.0:5000 app:app &)
+
+# G. Expose the application to the public internet via Tailscale Funnel
+tailscale funnel --bg 5000
+```
+Your wedding website is now publicly live at:
+`https://karen-steven-wedding.<your-tailnet>.ts.net`
+
